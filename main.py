@@ -2,6 +2,10 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Main projet space invaders
+To do : menu, 
+mettre en lien avec les objets,
+(afficher les vies),
+gestion du score
 
 """
 #importation des librairies
