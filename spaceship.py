@@ -2,7 +2,7 @@
 Louis Vincent-Hugo Prigent
 9/11/2023
 script de l'objet vaisseau
-
+to do : fini
 """
 
 class spaceship:

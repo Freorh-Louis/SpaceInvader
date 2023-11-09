@@ -2,7 +2,16 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet board projet space invaders
+to do : 
+- finir print_starship1
+- gerer mvt du startship1
+- affichage(image) et mvt des aliens
+- affichage et destruction des murs
+- hitbox de tout les objets
+- affichage, mvt et collisions des bullets
+- gestion de fin de partie
 """
+
 import time
 import tkinter as tk
 from main import window, game
@@ -22,4 +31,4 @@ class board:
     
     def print_spaceship1(self):
         bottom_spaceship1 = game.create_rectangle(self.__spaceship1.x, 635, self.__spaceship1.x + 30, 645)
-        top_spaceship = game.create_rectangle(self.__spaceship1.x + 10, 625, self.__spaceship1.x + 20, 635)
+        top_spaceship = game.create_rectangle(self.__spaceship1.x + 12, 629, self.__spaceship1.x + 18, 635)

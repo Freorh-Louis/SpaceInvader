@@ -2,6 +2,7 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet alien projet space invaders
+to do : fini
 """
 
 # Définie un objet alien

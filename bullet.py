@@ -2,6 +2,7 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet tir projet space invaders
+to do : fini
 """
 
 # Définie un objet bullet
