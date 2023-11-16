@@ -10,6 +10,8 @@ gestion du score
 """
 #importation des librairies
 import tkinter as tk
+import time
+import board
 
 
 
@@ -38,6 +40,17 @@ score.grid(row = 1, column = 1, sticky= "W")
 lives = tk.Label(window, text = "Live : ", font = ("Times New Roman", 15, "bold"))
 lives.grid(row = 1, column = 1, sticky = "E")
 
+
+board.move_alien()
+
+touche = tk.Event.keysym
+if touche == "Right":
+    board.move_spaceship1(1)
+elif touche == "Left":
+    board.move_spaceship1(-1)
+
+
+""""
 #page menu :
 difficulty = tk.Label(window, text ="Choose your difficulty :")
 
@@ -49,6 +62,8 @@ difficulty.grid(row = 2, column = 1, sticky = "N", pady = 150)
 button_dif1.grid(row = 2, column =1, sticky = "W", padx = 75)
 button_dif2.grid(row = 2, column = 1)
 button_dif3.grid(row = 2, column = 1, sticky = "E", padx = 75)
+"""
+
 
 window.mainloop()
 
