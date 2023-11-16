@@ -6,7 +6,7 @@ script de l'objet mur
 """
 
 
-class wall:
+class Wall:
     
     # a l'initialisation, l'état du mur est complet, donc on remplit le tableau de tableau avec que des 1
     def __init__(self): 
@@ -20,6 +20,9 @@ class wall:
     def destroy(self, row, column):
         self.__state[row][column] = 0
         return (self.__state)
+    
+    def get_state(self):
+        return self.__state
 
 
     

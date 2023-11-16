@@ -6,7 +6,7 @@ to do : fini
 """
 
 # Définie un objet alien
-class alien:
+class Alien:
     def __init__(self,x,y):
         # Crée les variables de postion x et y, et de l'état de vie de l'alien
         self.__x = x
@@ -20,6 +20,10 @@ class alien:
     
     # Fonction permettant de déplacer de 10% la position selon y de l'alien dans une direction donnée
     # direction = 1 : déplacement vers la droite / direction = -1 : déplacement vers la gauche
-    def move_y(self, direction):
-        self.__y += direction * 0.1
+    def move_y(self):
+        self.__y += 0.1
     
+    def getx(self):
+        return self.__x
+    def gety(self):
+        return self.__y

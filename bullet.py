@@ -6,7 +6,7 @@ to do : fini
 """
 
 # Définie un objet bullet
-class bullet:
+class Bullet:
     def __init__(self, x, y):
         # Crée les variables de postion x et y, et de l'état de vie de bullet
         self.__x = x
@@ -18,3 +18,9 @@ class bullet:
     def move_x(self, direction):
         self.__x += direction*0.01
         return self.__x
+    
+    def getx(self):
+        return self.__x
+    
+    def gety(self):
+        return self.__y

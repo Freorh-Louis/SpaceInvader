@@ -11,7 +11,7 @@ gestion du score
 #importation des librairies
 import tkinter as tk
 import time
-import board
+from board import Board
 
 
 
@@ -40,14 +40,11 @@ score.grid(row = 1, column = 1, sticky= "W")
 lives = tk.Label(window, text = "Live : ", font = ("Times New Roman", 15, "bold"))
 lives.grid(row = 1, column = 1, sticky = "E")
 
+board1 = Board(game)
 
-board.move_alien()
+board1.move_alien()
+window.bind("<Key>", board1.move_spaceship1)
 
-touche = tk.Event.keysym
-if touche == "Right":
-    board.move_spaceship1(1)
-elif touche == "Left":
-    board.move_spaceship1(-1)
 
 
 """"
