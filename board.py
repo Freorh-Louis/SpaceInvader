@@ -28,7 +28,20 @@ class board:
         self.__wall1 = wall
         self.__wall2 = wall
         self.__wall3 = wall
+        self.__alien1 = alien
     
     def print_spaceship1(self):
         bottom_spaceship1 = game.create_rectangle(self.__spaceship1.x, 635, self.__spaceship1.x + 30, 645)
         top_spaceship = game.create_rectangle(self.__spaceship1.x + 12, 629, self.__spaceship1.x + 18, 635)
+
+    #ef create_bullet(self):
+
+    
+
+    def hitbox(self, objet):
+        (x1,y1,x2,y2) = game.coords(objet) 
+        return [(x2-x1)/2,(y2-y1)/2]
+    
+    #def colision(self,objet1, objet2):
+        
+        

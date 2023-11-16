@@ -2,7 +2,7 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Main projet space invaders
-To do : menu, 
+To do :  
 mettre en lien avec les objets,
 (afficher les vies),
 gestion du score
@@ -13,7 +13,7 @@ import tkinter as tk
 
 
 
-#creation de la fenetre: 
+#creation de la fenetre du jeu : 
 
 window = tk.Tk()
 window.title("Space Invaders")
@@ -37,6 +37,18 @@ score.grid(row = 1, column = 1, sticky= "W")
 
 lives = tk.Label(window, text = "Live : ", font = ("Times New Roman", 15, "bold"))
 lives.grid(row = 1, column = 1, sticky = "E")
+
+#page menu :
+difficulty = tk.Label(window, text ="Choose your difficulty :")
+
+button_dif1 = tk.Button(window, text = "Low")
+button_dif2 = tk.Button(window, text = "Medium")
+button_dif3 = tk.Button(window, text = "Hard")
+
+difficulty.grid(row = 2, column = 1, sticky = "N", pady = 150)
+button_dif1.grid(row = 2, column =1, sticky = "W", padx = 75)
+button_dif2.grid(row = 2, column = 1)
+button_dif3.grid(row = 2, column = 1, sticky = "E", padx = 75)
 
 window.mainloop()
 
