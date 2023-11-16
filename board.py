@@ -30,7 +30,10 @@ class board:
         self.__wall3 = wall
         self.__alien1 = alien
     
-
+    def init_board(self, difficulty):
+        game.delete(all)
+        bottom_spaceship1 = game.create_rectangle(self.__spaceship1.x * 820, 635, self.__spaceship1.x * 820 + 30, 645)
+        top_spaceship = game.create_rectangle(self.__spaceship1.x * 820 + 12, 629, self.__spaceship1.x * 820 + 18, 635)
 
     #ef create_bullet(self):
 
@@ -43,10 +46,7 @@ class board:
     #def colision(self,objet1, objet2):
         
         
-    def init_board(self, difficulty):
-        game.delete(all)
-        bottom_spaceship1 = game.create_rectangle(self.__spaceship1.x * 820, 635, self.__spaceship1.x * 820 + 30, 645)
-        top_spaceship = game.create_rectangle(self.__spaceship1.x * 820 + 12, 629, self.__spaceship1.x * 820 + 18, 635)
+
         
 
     def move_spaceship1(self):
