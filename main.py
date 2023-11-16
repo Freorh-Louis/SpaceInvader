@@ -40,3 +40,4 @@ lives.grid(row = 1, column = 1, sticky = "E")
 
 window.mainloop()
 
+ 
