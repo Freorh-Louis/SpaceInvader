@@ -17,11 +17,9 @@ class alien:
     # direction = 1 : déplacement vers la droite / direction = -1 : déplacement vers la gauche
     def move_x(self, direction):
         self.__x += direction*0.05
-        return self.__x
     
     # Fonction permettant de déplacer de 10% la position selon y de l'alien dans une direction donnée
     # direction = 1 : déplacement vers la droite / direction = -1 : déplacement vers la gauche
     def move_y(self, direction):
-        self.__y += direction*0.1
-        return self.__y
+        self.__y += direction * 0.1
     
