@@ -30,9 +30,10 @@ new_game = tk.Button(window, text = "New Game")
 new_game.grid(row = 2, column = 2, sticky ='N', pady = 200, padx = 30)
 
 
-quit = tk.Button(window, text = "Quit game")
+quit = tk.Button(window, text = "Quit game", command = game.destroy)
 quit.grid(row = 2, column = 2, pady = 200, padx = 30)
 
+    
  
 score = tk.Label(window, text = "Score : ", font  = ("Times New Roman", 15, "bold"))
 score.grid(row = 1, column = 1, sticky= "W")

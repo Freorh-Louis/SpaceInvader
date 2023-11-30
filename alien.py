@@ -23,7 +23,11 @@ class Alien:
     def move_y(self):
         self.__y += 0.1
     
+    #ces fontions donnent la position en x ou y de l'ogjet entrée : self, objet sortie : x/y attribut. 
     def getx(self):
         return self.__x
     def gety(self):
         return self.__y
+    
+    def setx(self, new_x):
+        self.__x = new_x
