@@ -43,7 +43,7 @@ lives.grid(row = 1, column = 1, sticky = "E")
 board1 = Board(game)
 
 board1.move_alien()
-window.bind("<Key>", board1.move_spaceship1)
+window.bind("<Key>", board1.key_pressed)
 
 
 

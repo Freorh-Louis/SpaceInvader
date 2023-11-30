@@ -25,5 +25,9 @@ class Alien:
     
     def getx(self):
         return self.__x
+    
     def gety(self):
         return self.__y
+    
+    def setx(self, new_x):
+        self.__x = new_x
