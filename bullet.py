@@ -13,12 +13,16 @@ class Bullet:
         self.__y = y
         self.__life = 1
     
-    # Fonction permettant de déplacer de 1% la position selon x de bullet dans un direction donnée
+    # Méthode permettant de déplacer de 1% la position selon x de bullet dans un direction donnée
     # direction = 1 : déplacement vers la droite / direction = -1 : déplacement vers la gauche
     def move_y(self, direction):
         self.__y += direction*0.01
         return self.__y
     
+
+
+    # Ces méthodes permettent d'obtenir la postion en x/y  de l'objet
+    # entrée: l'objet sortie: postion en x/y (valeurs réelles)
     def getx(self):
         return self.__x
     
