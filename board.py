@@ -32,9 +32,9 @@ class Board:
         self.__alien_list = []
         self.__bottom_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820, 635, self.__spaceship1.getx() * 820 + 30, 645, fill = 'green', outline = "green")
         self.__top_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820 + 12, 629, self.__spaceship1.getx() * 820 + 18, 635, fill = 'green', outline = "green")
-        
         self.__rec_list = []
         
+
         for i in range(12):
             if i <= 5:
                 self.__alien_list.append( Alien( 0.12 + i * 0.05, 0.1 + 0.05))
@@ -68,6 +68,8 @@ class Board:
     def move_alien(self):
         global direction_alien
         
+        direction_alien = 1 
+        
         n = len(self.__alien_list)
 
         if self.__alien_list[n -1].getx() > 0.9:
@@ -77,16 +79,16 @@ class Board:
                 
                 self.__alien_list[i].move_y()
             
-            for i in range(n-1, -1 ,-1):
-                print(i)
-                if i >= 6:
-                    self.__alien_list[i].setx(0.90 - (n-i-1) * 0.05)
-                    print(0.90 - ((n -i )* 0.05))
-            
+            for i in range(n):
+                if i <= 5:
+                    self.__alien_list[i].setx(0.98 - (6 - i) * 0.05)
                 else:
-                    self.__alien_list[i].setx(0.90 - (n -(i + 5)) * 0.05)
+                    self.__alien_list[i].setx(0.98 - (n - i) * 0.05)
+                    
+                
+                    
         
-        elif self.__alien_list[0].getx() < 0.1:
+        if self.__alien_list[0].getx() < 0.1:
             direction_alien = 1
             
 
@@ -94,11 +96,11 @@ class Board:
                 self.__alien_list[i].move_y()
             
 
-                
-        
-        for i in range(n):
-            self.__alien_list[i].move_x(direction_alien)
-            self.__game.coords(self.__rec_list[i], self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30)
+             
+        else: 
+            for i in range(n):
+                self.__alien_list[i].move_x( direction_alien )
+                self.__game.coords(self.__rec_list[i], self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30)
         
         self.__game.after(1000, self.move_alien)
         
