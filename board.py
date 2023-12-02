@@ -21,10 +21,11 @@ from bullet import Bullet
 class Board:
 
     # méthode d'initialisation, crée les murs (objets), le vaisseau(objets), les aliens (liste)  
-    # , game (=la fenetre), les rectangles (affichage graphique des objets)
+    #  game (=la fenetre), les rectangles (affichage graphique des objets)
     # comme des attributs pour l'objet Board
       
     def __init__(self, game):
+        
         self.__game = game
         self.__spaceship1 = Spaceship()
         self.__wall_list = [Wall(), Wall(), Wall()]
@@ -33,7 +34,7 @@ class Board:
         self.__bottom_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820, 635, self.__spaceship1.getx() * 820 + 30, 645, fill = 'green', outline = "green")
         self.__top_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820 + 12, 629, self.__spaceship1.getx() * 820 + 18, 635, fill = 'green', outline = "green")
         self.__rec_list = []
-        
+        self.__direction_alien = 1
 
         for i in range(12):
             if i <= 5:
@@ -66,52 +67,57 @@ class Board:
     # entrée:l'objet, sortie: un déplacement des alien (déplacement d'objets)
 
     def move_alien(self):
-        global direction_alien
-        
-        direction_alien = 1 
         
         n = len(self.__alien_list)
-
-        if self.__alien_list[n -1].getx() > 0.9:
-            direction_alien = -1
+    
+        if self.__alien_list[n -1].getx() > 0.97 :#limite au bord droit (pose pb)
+            self.__direction_alien = - 1
             
             for i in range(n):
                 
                 self.__alien_list[i].move_y()
             
-            for i in range(n):
                 if i <= 5:
-                    self.__alien_list[i].setx(0.98 - (6 - i) * 0.05)
+                    self.__alien_list[i].setx(1.05 - (6 - i) * 0.05)
                 else:
-                    self.__alien_list[i].setx(0.98 - (n - i) * 0.05)
+                    self.__alien_list[i].setx(1.05 - (n - i) * 0.05)
                     
                 
-                    
-        
-        if self.__alien_list[0].getx() < 0.1:
-            direction_alien = 1
+        if self.__alien_list[0].getx() < 0.04: #limite au bord gauche
+            self.__direction_alien = 1
             
 
             for i in range(n):
                 self.__alien_list[i].move_y()
-            
+              
+                if i <= 5:
+                    self.__alien_list[i].setx( -0.1 + (6 - i) * 0.05)
+                else:
+                    self.__alien_list[i].setx( -0.1 + (n - i) * 0.05) 
 
-             
-        else: 
-            for i in range(n):
-                self.__alien_list[i].move_x( direction_alien )
-                self.__game.coords(self.__rec_list[i], self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30)
+
+        for i in range(n):
+            self.__alien_list[i].move_x( self.__direction_alien )
+            self.__game.coords(self.__rec_list[i], self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30)
         
         self.__game.after(1000, self.move_alien)
         
+    # Méthode permettant d'obtenir les changements sur la fenetre
+    # entrée : objet, sortie : attribut de Board
     
     def get_game(self):
         return self.__game
     
+    # Méthode gérant le fait de tirer avec le vaisseau, elle passe par plusieurs sou-méthodes:
+    # entree : objet et event (), sortie : déplacement et apparition de la balle
+    
     def key_pressed(self, event):    
+        
+        #Sous-méthode gérant 
+
         def spaceship_shoot():
             new_bullet = Bullet(self.__spaceship1.getx(), 0.9)
-            rec_bullet = self.__game.create_rectangle(new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10, fill = 'green', outline = "green")
+            rec_bullet = self.__game.create_rectangle(new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10, fill = 'white', outline = "white")
             
             def move_bullet():
                 new_bullet.move_y(-1)
@@ -142,15 +148,21 @@ class Board:
             direction = -1
             move_spaceship1()
     
+    
+    # Méthode gérant la destruction des murs
+    # etrée : objet, sortie: disparition d'un bloc du mur 
+    
     def destroy_wall(self, bullet):
+        
         (x1,y1,x2,y2) = self.__game.coords(bullet) 
         hitbox = (x2 + x1)/2
+        
         for j in range(3):
             for k in range(3):
                 for l in range(6):
                     coords = self.__game.coords(self.__rec_wall_list[j][k][l])
                     if coords[0] > hitbox and coords[1] > hitbox and coords[2] < hitbox and coords[3] < hitbox:
-                        # self.__rec_wall_list[j][k][l].destroy(j, k)
+                        #self.__rec_wall_list[j][k][l].destroy(j, k)
                         self.__game.delete(self.__rec_wall_list[j][k][l])
                         self.__game.delete(bullet)
                         
