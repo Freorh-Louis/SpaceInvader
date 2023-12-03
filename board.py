@@ -7,6 +7,7 @@ to do :
 - hitbox de tout les objets (à finir)
 - collisions des bullets
 - gestion de fin de partie
+- bonne pratique
 """
 
 import tkinter as tk
@@ -152,11 +153,11 @@ class Board:
         for j in range(3):
             for k in range(3):
                 for l in range(6):
-                    coords = self.__game.coords(self.__rec_wall_list[j][k][l])
-                    print(coords)
-                    if x > coords[0] and y > coords[1] and x < coords[2] and y < coords[3]:
-                        #self.__rec_wall_list[j][k][l].destroy(j, k)
-                        self.__game.delete(self.__rec_wall_list[j][k][l])
-                        self.__game.delete(rec_bullet)
-                        bullet.setlife(0)
+                    if self.__wall_list[j].get_state()[k][l] == 1:
+                        coords = self.__game.coords(self.__rec_wall_list[j][k][l])
+                        if x > coords[0] and y > coords[1] and x < coords[2] and y < coords[3]:
+                            self.__wall_list[j].destroy(k, l)
+                            self.__game.delete(self.__rec_wall_list[j][k][l])
+                            self.__game.delete(rec_bullet)
+                            bullet.setlife(0)
                         
