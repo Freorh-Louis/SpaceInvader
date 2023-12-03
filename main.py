@@ -47,7 +47,6 @@ board1.move_alien()
 window.bind("<Key>", board1.key_pressed)
 
 
-
 """"
 #page menu :
 difficulty = tk.Label(window, text ="Choose your difficulty :")

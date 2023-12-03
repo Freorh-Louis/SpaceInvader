@@ -28,3 +28,10 @@ class Bullet:
     
     def gety(self):
         return self.__y
+    
+    def getlife(self):
+        return self.__life
+    
+    def setlife(self, newlife):
+        self.__life = newlife
+        return self.__life

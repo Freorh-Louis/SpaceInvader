@@ -36,14 +36,12 @@ class Board:
         self.__rec_list = []
         self.__direction_alien = 1
 
-        for i in range(12):
-            if i <= 5:
-                self.__alien_list.append( Alien( 0.12 + i * 0.05, 0.1 + 0.05))
-            
-            if i > 5 :
-                self.__alien_list.append( Alien( 0.12 + (i-6) * 0.05, 0.22))
-            
-            self.__rec_list.append(self.__game.create_rectangle(self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30, fill = 'green', outline = 'green'))
+        for i in range(5):
+            self.__alien_list.append([])
+            self.__rec_list.append([])
+            for j in range(10):
+                self.__alien_list[i].append( Alien( 0.12 + j * 0.05, 0.15 + i * 0.07))
+                self.__rec_list[i].append(self.__game.create_rectangle(self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30, fill = 'green', outline = 'green'))
     
         self.__rec_wall_list = []
         for j in range(3):
@@ -67,38 +65,30 @@ class Board:
     # entrée:l'objet, sortie: un déplacement des alien (déplacement d'objets)
 
     def move_alien(self):
-        
+
         n = len(self.__alien_list)
-    
-        if self.__alien_list[n -1].getx() > 0.97 :#limite au bord droit (pose pb)
-            self.__direction_alien = - 1
-            
-            for i in range(n):
+
+        for i in range(5):
+            if self.__alien_list[i][9].getx() > 0.95 :#limite au bord droit (pose pb)
+                self.__direction_alien = - 1
                 
-                self.__alien_list[i].move_y()
-            
-                if i <= 5:
-                    self.__alien_list[i].setx(1.05 - (6 - i) * 0.05)
-                else:
-                    self.__alien_list[i].setx(1.05 - (n - i) * 0.05)
+                for j in range(10):
+                    self.__alien_list[i][j].move_y()
+                    self.__alien_list[i][j].setx(1 - (9 - j) * 0.05)
                     
+                        
+            if self.__alien_list[i][0].getx() < 0.05: #limite au bord gauche
+                self.__direction_alien = 1
                 
-        if self.__alien_list[0].getx() < 0.04: #limite au bord gauche
-            self.__direction_alien = 1
-            
+                for j in range(10):
+                    self.__alien_list[i][j].move_y()
+                    self.__alien_list[i][j].setx(j * 0.05)
+                     
 
-            for i in range(n):
-                self.__alien_list[i].move_y()
-              
-                if i <= 5:
-                    self.__alien_list[i].setx( -0.1 + (6 - i) * 0.05)
-                else:
-                    self.__alien_list[i].setx( -0.1 + (n - i) * 0.05) 
-
-
-        for i in range(n):
-            self.__alien_list[i].move_x( self.__direction_alien )
-            self.__game.coords(self.__rec_list[i], self.__alien_list[i].getx() * 820, self.__alien_list[i].gety() * 620, self.__alien_list[i].getx() * 820 + 30, self.__alien_list[i].gety() * 620 + 30)
+        for i in range(5):
+            for j in range(10):
+                self.__alien_list[i][j].move_x( self.__direction_alien )
+                self.__game.coords(self.__rec_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
         
         self.__game.after(1000, self.move_alien)
         
@@ -120,15 +110,16 @@ class Board:
             rec_bullet = self.__game.create_rectangle(new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10, fill = 'white', outline = "white")
             
             def move_bullet():
-                new_bullet.move_y(-1)
-                self.__game.coords(rec_bullet, new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10)
-                if new_bullet.gety() <= 0:
-                    self.__game.delete(rec_bullet)
-                else:
-                    self.__game.after(10, move_bullet)
-                    self.destroy_wall(rec_bullet)
-
-                
+                if new_bullet.getlife() == 1:
+                    new_bullet.move_y(-1)
+                    self.__game.coords(rec_bullet, new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10)
+                    if new_bullet.gety() <= 0:
+                        new_bullet.setlife(0)
+                        self.__game.delete(rec_bullet)
+                    else:
+                        self.__game.after(10, move_bullet)
+                        self.destroy_wall(new_bullet, rec_bullet)
+            
             move_bullet()
 
         def move_spaceship1():
@@ -152,17 +143,20 @@ class Board:
     # Méthode gérant la destruction des murs
     # etrée : objet, sortie: disparition d'un bloc du mur 
     
-    def destroy_wall(self, bullet):
+    def destroy_wall(self, bullet, rec_bullet):
         
-        (x1,y1,x2,y2) = self.__game.coords(bullet) 
-        hitbox = (x2 + x1)/2
+        (x1,y1,x2,y2) = self.__game.coords(rec_bullet) 
+        x = (x2 + x1)/2
+        y = (y2 + y1)/2
         
         for j in range(3):
             for k in range(3):
                 for l in range(6):
                     coords = self.__game.coords(self.__rec_wall_list[j][k][l])
-                    if coords[0] > hitbox and coords[1] > hitbox and coords[2] < hitbox and coords[3] < hitbox:
+                    print(coords)
+                    if x > coords[0] and y > coords[1] and x < coords[2] and y < coords[3]:
                         #self.__rec_wall_list[j][k][l].destroy(j, k)
                         self.__game.delete(self.__rec_wall_list[j][k][l])
-                        self.__game.delete(bullet)
+                        self.__game.delete(rec_bullet)
+                        bullet.setlife(0)
                         
