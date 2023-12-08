@@ -3,10 +3,8 @@ Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet board projet space invaders
 to do : 
-- affichage et destruction des murs
-- hitbox de tout les objets (à finir)
-- collisions des bullets
 - gestion de fin de partie
+- gestion des vagues
 - bonne pratique
 """
 
@@ -25,23 +23,26 @@ class Board:
     #  game (=la fenetre), les rectangles (affichage graphique des objets)
     # comme des attributs pour l'objet Board
       
-    def __init__(self, game):
+    def __init__(self, game, score_var):
         
         self.__game = game
         self.__spaceship1 = Spaceship()
         self.__wall_list = [Wall(), Wall(), Wall()]
-        self.__direction_alien = 1
-        self.__alien_list = []
         self.__bottom_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820, 635, self.__spaceship1.getx() * 820 + 30, 645, fill = 'green', outline = "green")
         self.__top_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820 + 12, 629, self.__spaceship1.getx() * 820 + 18, 635, fill = 'green', outline = "green")
+        self.__alien_list = []
         self.__rec_alien_list = []
+        self.__dead_alien = 0
         self.__direction_alien = 1
+        self.__speed = 1000
+        self.__score = 0
+        self.__score_var = score_var
 
         for i in range(5):
             self.__alien_list.append([])
             self.__rec_alien_list.append([])
             for j in range(10):
-                self.__alien_list[i].append( Alien( 0.12 + j * 0.05, 0.15 + i * 0.07))
+                self.__alien_list[i].append( Alien( 0.12 + j * 0.05, 0.05 + i * 0.07))
                 self.__rec_alien_list[i].append(self.__game.create_rectangle(self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30, fill = 'green', outline = 'green'))
     
         self.__rec_wall_list = []
@@ -53,11 +54,18 @@ class Board:
                     self.__rec_wall_list[j][k].append(self.__game.create_rectangle(170 + j*200 + l*20, 450 + k*20, 190 + j*200 + l*20, 470 + k*20, fill = 'green', outline = "black"))
 
 
-    # méthode donnant le centre de gravité de l'objet, en vue de gérer les collisions
-    # entrée : un objet, sortie: centre de gravité( tableau de valeurs réelles)
-    def hitbox(self, objet):
-        (x1,y1,x2,y2) = self.__game.coords(objet) 
-        return [(x2-x1)/2,(y1-y2)/2]
+    def create_alien(self, speed):
+        self.__alien_list = []
+        self.__rec_alien_list = []
+        self.__direction_alien = 1
+        self.__speed = speed
+        for i in range(5):
+            self.__alien_list.append([])
+            self.__rec_alien_list.append([])
+            for j in range(10):
+                self.__alien_list[i].append( Alien( 0.12 + j * 0.05, 0.05 + i * 0.07))
+                self.__rec_alien_list[i].append(self.__game.create_rectangle(self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30, fill = 'green', outline = 'green'))
+
     
 
 
@@ -91,7 +99,7 @@ class Board:
                 self.__alien_list[i][j].move_x( self.__direction_alien )
                 self.__game.coords(self.__rec_alien_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
         
-        self.__game.after(1000, self.move_alien)
+        self.__game.after(self.__speed, self.move_alien)
         
     # Méthode permettant d'obtenir les changements sur la fenetre
     # entrée : objet, sortie : attribut de Board
@@ -145,7 +153,7 @@ class Board:
     # etrée : objet, sortie: disparition d'un bloc du mur 
     
     def collision(self, bullet, rec_bullet):
-        
+        self.__dead_alien = 0
         (x1,y1,x2,y2) = self.__game.coords(rec_bullet) 
         x = (x2 + x1)/2
         y = (y2 + y1)/2
@@ -165,10 +173,18 @@ class Board:
             for j in range(10):
                 if self.__alien_list[i][j].getlife() == 1:
                     coords_alien = self.__game.coords(self.__rec_alien_list[i][j])
-                    if x > coords_alien[0] and y > coords_alien[1] and x < coords_alien[2] and y < coords_alien[3]:
+                    if (x1 > coords_alien[0] and y > coords_alien[1] and x1 < coords_alien[2] and y < coords_alien[3]) or (x2 > coords_alien[0] and y > coords_alien[1] and x2 < coords_alien[2] and y < coords_alien[3]):
                         self.__alien_list[i][j].setlife(0)
                         self.__game.delete(self.__rec_alien_list[i][j])
                         self.__game.delete(rec_bullet)
                         bullet.setlife(0)
+                        self.__score += 20
+                        self.__score_var.set("Score : " + str(self.__score))
+                else:
+                    self.__dead_alien += 1
+        
+        if self.__dead_alien == 50:
+            self.create_alien(self.__speed - 100)
+    
 
                                  

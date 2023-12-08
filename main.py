@@ -29,19 +29,19 @@ game.grid(row = 2, column = 1, sticky = 'SW', padx = 5, pady = 5)
 new_game = tk.Button(window, text = "New Game")
 new_game.grid(row = 2, column = 2, sticky ='N', pady = 200, padx = 30)
 
+score = tk.StringVar()
+score.set("Score : 0")
+board1 = Board(game, score)
 
 quit = tk.Button(window, text = "Quit game", command = game.destroy)
 quit.grid(row = 2, column = 2, pady = 200, padx = 30)
-
-    
  
-score = tk.Label(window, text = "Score : ", font  = ("Times New Roman", 15, "bold"))
+score = tk.Label(window, textvariable = score , font  = ("Times New Roman", 15, "bold"))
 score.grid(row = 1, column = 1, sticky= "W")
 
 lives = tk.Label(window, text = "Live : ", font = ("Times New Roman", 15, "bold"))
 lives.grid(row = 1, column = 1, sticky = "E")
 
-board1 = Board(game)
 
 board1.move_alien()
 window.bind("<Key>", board1.key_pressed)
