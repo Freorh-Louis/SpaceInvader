@@ -32,3 +32,10 @@ class Alien:
     
     def setx(self, new_x):
         self.__x = new_x
+
+    def setlife(self,value):
+        self.__life = value
+
+    def getlife(self):
+        return(self.__life)
+        

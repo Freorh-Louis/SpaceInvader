@@ -34,15 +34,15 @@ class Board:
         self.__alien_list = []
         self.__bottom_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820, 635, self.__spaceship1.getx() * 820 + 30, 645, fill = 'green', outline = "green")
         self.__top_spaceship1 = self.__game.create_rectangle(self.__spaceship1.getx() * 820 + 12, 629, self.__spaceship1.getx() * 820 + 18, 635, fill = 'green', outline = "green")
-        self.__rec_list = []
+        self.__rec_alien_list = []
         self.__direction_alien = 1
 
         for i in range(5):
             self.__alien_list.append([])
-            self.__rec_list.append([])
+            self.__rec_alien_list.append([])
             for j in range(10):
                 self.__alien_list[i].append( Alien( 0.12 + j * 0.05, 0.15 + i * 0.07))
-                self.__rec_list[i].append(self.__game.create_rectangle(self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30, fill = 'green', outline = 'green'))
+                self.__rec_alien_list[i].append(self.__game.create_rectangle(self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30, fill = 'green', outline = 'green'))
     
         self.__rec_wall_list = []
         for j in range(3):
@@ -50,7 +50,7 @@ class Board:
             for k in range(3):
                 self.__rec_wall_list[j].append([])
                 for l in range(6):
-                    self.__rec_wall_list[j][k].append(self.__game.create_rectangle(170 + j*200 + l*20, 450 + k*20, 180 + j*200 + l*20, 460 + k*20, fill = 'green', outline = "green"))
+                    self.__rec_wall_list[j][k].append(self.__game.create_rectangle(170 + j*200 + l*20, 450 + k*20, 190 + j*200 + l*20, 470 + k*20, fill = 'green', outline = "black"))
 
 
     # méthode donnant le centre de gravité de l'objet, en vue de gérer les collisions
@@ -89,7 +89,7 @@ class Board:
         for i in range(5):
             for j in range(10):
                 self.__alien_list[i][j].move_x( self.__direction_alien )
-                self.__game.coords(self.__rec_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
+                self.__game.coords(self.__rec_alien_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
         
         self.__game.after(1000, self.move_alien)
         
@@ -119,7 +119,7 @@ class Board:
                         self.__game.delete(rec_bullet)
                     else:
                         self.__game.after(10, move_bullet)
-                        self.destroy_wall(new_bullet, rec_bullet)
+                        self.collision(new_bullet, rec_bullet)
             
             move_bullet()
 
@@ -144,7 +144,7 @@ class Board:
     # Méthode gérant la destruction des murs
     # etrée : objet, sortie: disparition d'un bloc du mur 
     
-    def destroy_wall(self, bullet, rec_bullet):
+    def collision(self, bullet, rec_bullet):
         
         (x1,y1,x2,y2) = self.__game.coords(rec_bullet) 
         x = (x2 + x1)/2
@@ -160,4 +160,15 @@ class Board:
                             self.__game.delete(self.__rec_wall_list[j][k][l])
                             self.__game.delete(rec_bullet)
                             bullet.setlife(0)
-                        
+
+        for i in range(5):
+            for j in range(10):
+                if self.__alien_list[i][j].getlife() == 1:
+                    coords_alien = self.__game.coords(self.__rec_alien_list[i][j])
+                    if x > coords_alien[0] and y > coords_alien[1] and x < coords_alien[2] and y < coords_alien[3]:
+                        self.__alien_list[i][j].setlife(0)
+                        self.__game.delete(self.__rec_alien_list[i][j])
+                        self.__game.delete(rec_bullet)
+                        bullet.setlife(0)
+
+                                 
