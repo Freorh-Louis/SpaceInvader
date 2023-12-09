@@ -19,3 +19,10 @@ class Spaceship:
 
     def getx(self):
         return self.__x
+
+    def damage(self):
+        self.__life -=1
+        return self.__life
+    
+    def getlife(self):
+        return self.__life
