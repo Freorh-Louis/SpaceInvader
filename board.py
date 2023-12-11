@@ -200,20 +200,21 @@ class Board:
         nbr = randint(1,4)
         if nbr == 1:
             i,j = randint(0,4),randint(0,9)
-            new_bullet = Bullet(self.__alien_list[i][j].getx(), self.__alien_list[i][j].gety())
-            rec_bullet = self.__game.create_rectangle(new_bullet.getx() * 820, new_bullet.gety() * 650 + 30, new_bullet.getx() * 820 + 5, new_bullet.gety() * 650 + 40, fill = 'white', outline = "white")
-            
-            def move_bullet():
-                if new_bullet.getlife() == 1:
-                    new_bullet.move_y(1)
-                    self.__game.coords(rec_bullet, new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10)
-                    if new_bullet.gety() <= 0:
-                        new_bullet.setlife(0)
-                        self.__game.delete(rec_bullet)
-                    else:
-                        self.collision(new_bullet, rec_bullet, "alien")
-                        self.__game.after(10, move_bullet)
-            
-            move_bullet()
+            if self.__alien_list[i][j].getlife() == 1:
+                new_bullet = Bullet(self.__alien_list[i][j].getx(), self.__alien_list[i][j].gety())
+                rec_bullet = self.__game.create_rectangle(new_bullet.getx() * 820, new_bullet.gety() * 650 + 30, new_bullet.getx() * 820 + 5, new_bullet.gety() * 650 + 40, fill = 'white', outline = "white")
+                
+                def move_bullet():
+                    if new_bullet.getlife() == 1:
+                        new_bullet.move_y(1)
+                        self.__game.coords(rec_bullet, new_bullet.getx() * 820 + 12, new_bullet.gety() * 650, new_bullet.getx() * 820 + 17, new_bullet.gety() * 650 + 10)
+                        if new_bullet.gety() <= 0:
+                            new_bullet.setlife(0)
+                            self.__game.delete(rec_bullet)
+                        else:
+                            self.collision(new_bullet, rec_bullet, "alien")
+                            self.__game.after(10, move_bullet)
+                
+                move_bullet()
         
         self.__game.after(int(self.__speed/4), self.tir_alien)
