@@ -17,6 +17,7 @@ from bullet import Bullet
 
 
 
+
 # Cet objet gère la postion, l'apparence et l'état de vie de tout les autres objets du jeu
 class Board:
 
@@ -24,7 +25,7 @@ class Board:
     #  game (=la fenetre), les rectangles (affichage graphique des objets)
     # comme des attributs pour l'objet Board
       
-    def __init__(self, game, score_var, life_var):
+    def __init__(self, game, score_var, life_var, difficulty):
         
         self.__game = game
         self.__spaceship1 = Spaceship()
@@ -40,7 +41,8 @@ class Board:
         self.__score_var = score_var
         self.__life_var = life_var
         self.__bullet_cooldown = 0
-
+        self.__difficulty = difficulty
+ 
         for i in range(5):
             self.__alien_list.append([])
             self.__rec_alien_list.append([])
@@ -148,7 +150,7 @@ class Board:
     
     
     # Méthode gérant la destruction des murs
-    # etrée : objet, sortie: disparition d'un bloc du mur 
+    # entrée : objet, sortie: disparition d'un bloc du mur 
     
     def collision(self, bullet, rec_bullet, source):
         self.__dead_alien = 0
@@ -218,3 +220,6 @@ class Board:
                 move_bullet()
         
         self.__game.after(int(self.__speed/4), self.tir_alien)
+
+
+    
