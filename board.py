@@ -4,7 +4,8 @@ Hugo PRIGENT, Louis VINCENT
 Objet board projet space invaders
 to do : 
 - gestion de fin de partie
-- gestion des vagues
+- bug gestion des cagues
+- soucoupe volante
 - bonne pratique
 """
 
@@ -78,7 +79,7 @@ class Board:
     # entrée:l'objet, sortie: un déplacement des alien (déplacement d'objets)
 
     def move_alien(self):
-        self.__bullet_cooldown = 2
+        self.__bullet_cooldown = 5
         for i in range(5):
             if self.__alien_list[i][9].getx() > 0.95 :#limite au bord droit (pose pb)
                 self.__direction_alien = -1
@@ -153,7 +154,6 @@ class Board:
     # entrée : objet, sortie: disparition d'un bloc du mur 
     
     def collision(self, bullet, rec_bullet, source):
-        self.__dead_alien = 0
         (x1,y1,x2,y2) = self.__game.coords(rec_bullet) 
         x = (x2 + x1)/2
         y = (y2 + y1)/2
@@ -181,8 +181,11 @@ class Board:
                             bullet.setlife(0)
                             self.__score += 20
                             self.__score_var.set("Score : " + str(self.__score))
-                    else:
-                        self.__dead_alien += 1
+                            self.__dead_alien += 1
+                            print(self.__dead_alien)
+                        
+        
+          
         elif source == "alien":
             coords_spaceship = self.__game.coords(self.__bottom_spaceship1)
             if (x1 > coords_spaceship[0] and y > coords_spaceship[1] and x1 < coords_spaceship[2] and y < coords_spaceship[3]) or (x2 > coords_spaceship[0] and y > coords_spaceship[1] and x2 < coords_spaceship[2] and y < coords_spaceship[3]):
@@ -194,8 +197,7 @@ class Board:
         if self.__dead_alien == 50:
             self.__speed -= 100
             self.create_alien(self.__speed)
-
-
+        
 
 
     def tir_alien(self):
