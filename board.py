@@ -37,12 +37,11 @@ class Board:
         self.__rec_alien_list = []
         self.__dead_alien = 0
         self.__direction_alien = 1
-        self.__speed = 1000
+        self.__speed = int(2000 / difficulty)
         self.__score = 0
         self.__score_var = score_var
         self.__life_var = life_var
         self.__bullet_cooldown = 0
-        self.__difficulty = difficulty
  
         for i in range(5):
             self.__alien_list.append([])
