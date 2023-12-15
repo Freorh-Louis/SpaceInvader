@@ -64,11 +64,11 @@ class Launch_game:
         menu_list = []
         for e in self.__window.children:
             menu_list.append(e)
-        self.__window.children[menu_list[0]].place(x = 100, y = 0)
+        self.__window.children[menu_list[0]].place(x = 100, y = 50)
         self.__window.children[menu_list[1]].place(x = 220, y = 0, relwidth = 1, relheight = 1)
         self.__window.children[menu_list[2]].place(x = 100, y = 100)
         self.__window.children[menu_list[3]].place(x = 160, y = 100) 
-        self.__window.children[menu_list[4]].place(x = 220 , y = 100)
+        self.__window.children[menu_list[4]].place(x = 240 , y = 100)
 
 
     #méthode permettant de lancer le jeu, d'afficher le jeu de façon a ce qu'il soit dynamique
