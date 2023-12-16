@@ -86,6 +86,8 @@ class Launch_game:
 
         self.__window.children[game_list[5]].delete('all')
         board1 = Board(self.__window.children[game_list[5]], self.__score, self.__life, self.__difficulty)
+        board1.create_alien()
+        board1.create_wall()
         board1.move_alien()
         board1.tir_alien()
         self.__window.bind("<Key>", board1.key_pressed)

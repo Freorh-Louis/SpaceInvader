@@ -10,8 +10,6 @@ gestion du score
 """
 #importation des librairies
 import tkinter as tk
-from board import Board
-import function
 from launch_game import Launch_game
 
 
