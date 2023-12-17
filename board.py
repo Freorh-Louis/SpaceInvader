@@ -2,8 +2,7 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet board projet space invaders
-to do : 
-- soucoupe volante
+to do : fini
 """
 
 from random import randint
