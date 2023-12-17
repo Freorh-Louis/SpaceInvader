@@ -13,57 +13,75 @@ from board import Board
 
 class Launch_game:
     
-    #méthode d'initialiastion
+    #méthode d'initialisation
     def __init__(self, window, score, life):
         self.__difficulty = 0
         self.__window = window
         self.__score = score
         self.__life = life
         
+    # Méthode permettant d'effacer le menu.
+    # entrée: l'objet 
+    # sortie: effacement des éléments enfant de la fenentre en fonction de si le jeu a été lancé ou non
     
     def clear_window(self):
         widget_list = []
+        
+        # on répertorit les éléments dans une liste
         for e in self.__window.children:
             widget_list.append(e)
+        
         for e in widget_list:
+            # si le jeu à commencé, alors on efface le menu
             if self.__difficulty != 0:
                 self.__window.children[e].place_forget()
+            # si le jeu est déjà lancé, on efface le jeu
             else: 
                 self.__window.children[e].grid_forget()
 
 
 
-    #méthode permettant de choisir le nivau 1:
-    #entrée : l'objet , sortie : valeur 1 attribuée pour la difficulté
+    # Méthode permettant de choisir le nivau 1:
+    # entrée : l'objet  
+    # sortie : valeur 1 attribuée pour la difficulté
+    
     def set_difficulty1(self):
         self.__difficulty = 1
         self.clear_window()
         self.launch_game()
         
     
-    #cette méthode marche comme celle ci-dessus mais pour le niveau 2
+    # Cette méthode marche comme celle ci-dessus mais pour le niveau 2
     def set_difficulty2(self):
         self.__difficulty = 2
         self.clear_window()
         self.launch_game()
 
-    #de même pour le niveau 3
+    # De même pour le niveau 3
     def set_difficulty3(self):
         self.__difficulty = 3
         self.clear_window()
         self.launch_game()
 
+    # Méthode permettant de lancer une nouvelle partie, elle est associée au bouton new_game
+    # entrée: l'ojet
+    # sortie: effacement de la fenetre, lancement du menu, mise à 0 de la difficulté
     
     def meth_new_game(self):
         self.__difficulty = 0
         self.clear_window()
         self.launch_menu()
     
-
+    # méthode permettant d'afficher le menu
+    # entrée: l'objet
+    # sortie: affichage des éléments du menu
+    
     def launch_menu(self):
         menu_list = []
+        # on répertorit les éléments du menu
         for e in self.__window.children:
             menu_list.append(e)
+        # on les affiche dans l'ordre voulu, a des positions voulues
         self.__window.children[menu_list[0]].place(x = 100, y = 50)
         self.__window.children[menu_list[1]].place(x = 220, y = 0, relwidth = 1, relheight = 1)
         self.__window.children[menu_list[2]].place(x = 100, y = 100)
@@ -71,8 +89,10 @@ class Launch_game:
         self.__window.children[menu_list[4]].place(x = 240 , y = 100)
 
 
-    #méthode permettant de lancer le jeu, d'afficher le jeu de façon a ce qu'il soit dynamique
-    #entrée : l'ojet, sortie : lancement et actualisation du jeu
+    # méthode permettant de lancer le jeu, d'afficher le jeu de façon a ce qu'il soit dynamique
+    # entrée : l'ojet 
+    # sortie : lancement et actualisation du jeu
+    
     def launch_game(self):
         game_list = []
         for e in self.__window.children:
@@ -93,8 +113,9 @@ class Launch_game:
         self.__window.bind("<Key>", board1.key_pressed)
 
     
-    #methode permettant d'acceder a la difficulté 
-    #entrée : l'objet, sortie : la difficulté
+    # methode permettant d'acceder a la difficulté 
+    # entrée : l'objet 
+    # sortie : la difficulté (entier)
     def get_difficulty(self):
         return self.__difficulty
     

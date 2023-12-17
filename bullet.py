@@ -22,16 +22,23 @@ class Bullet:
 
 
     # Ces méthodes permettent d'obtenir la postion en x/y  de l'objet
-    # entrée: l'objet sortie: postion en x/y (valeurs réelles)
+    # entrée: l'objet 
+    # sortie: postion en x/y (réels)
     def getx(self):
         return self.__x
     
     def gety(self):
         return self.__y
     
+    # Méthode permettant d'obtenir la vie de l'objet 
+    # entrée: l'objet 
+    # sortie: état de la vie de l'objet (entier 0 ou 1)
     def getlife(self):
         return self.__life
     
+    # Méthode permettant d'obtenir la vie de l'objet 
+    # entrée: l'objet, newlife (entier)
+    # sortie: changement de l'état de la vie de l'objet (entier)
     def setlife(self, newlife):
         self.__life = newlife
         return self.__life
