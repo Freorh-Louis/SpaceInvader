@@ -2,13 +2,11 @@
 Hugo PRIGENT, Louis VINCENT
 13/12/2023
 
-Classe permettant de lancer le jeu 
-en choisissant la difficulté
+Classe permettant de lancer le jeu en choisissant la difficulté et de relancer une nouvelle partie
 
 to do : fini
 """
 
-import tkinter as tk
 from board import Board
 
 class Launch_game:
@@ -19,14 +17,16 @@ class Launch_game:
         self.__window = window
         self.__score = score
         self.__life = life
+        self.__board1 = None
         
     # Méthode permettant d'effacer le menu.
     # entrée: l'objet 
     # sortie: effacement des éléments enfant de la fenentre en fonction de si le jeu a été lancé ou non
     
     def clear_window(self):
+        if self.__board1 != None:
+            self.__board1.set_gameover(1)
         widget_list = []
-        
         # on répertorit les éléments dans une liste
         for e in self.__window.children:
             widget_list.append(e)
@@ -105,12 +105,14 @@ class Launch_game:
         self.__window.children[game_list[9]].grid(row = 1, column = 1, sticky = "E")
 
         self.__window.children[game_list[5]].delete('all')
-        board1 = Board(self.__window.children[game_list[5]], self.__score, self.__life, self.__difficulty)
-        board1.create_alien()
-        board1.create_wall()
-        board1.move_alien()
-        board1.tir_alien()
-        self.__window.bind("<Key>", board1.key_pressed)
+        self.__board1 = Board(self.__window.children[game_list[5]], self.__score, self.__life, self.__difficulty)
+        self.__board1.create_alien()
+        self.__board1.create_wall()
+        self.__board1.move_alien()
+        self.__board1.tir_alien()
+        self.__window.bind("<Key>", self.__board1.key_pressed)
+        
+        
 
     
     # methode permettant d'acceder a la difficulté 

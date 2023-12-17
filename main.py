@@ -21,7 +21,7 @@ window.geometry("1000x700+100+0")
 score = tk.StringVar()
 life = tk.StringVar()
 
-# initialisation des valuer de vie et du score
+# initialisation des valeurs de vie et du score
 score.set("Score : 0")
 life.set("Life : 3")
 
@@ -45,9 +45,7 @@ lives = tk.Label(window, textvariable = life, font = ("Times New Roman", 15, "bo
 
 # lancement du menu
 launcher.launch_menu()
-
 launcher.clear_window()
-
 
 
 window.mainloop()

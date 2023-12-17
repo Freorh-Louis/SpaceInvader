@@ -2,11 +2,9 @@
 Hugo PRIGENT, Louis VINCENT
 09/11/2023
 Objet board projet space invaders
-to do : 
-- soucoupe volante
+to do : fini
 """
 
-import tkinter as tk
 from random import randint
 from alien import Alien
 from spaceship import Spaceship
@@ -73,45 +71,46 @@ class Board:
     # sortie: un déplacement des alien (déplacement d'objets) ou un écran de fin de partie si les aliens sont en bas de pages.
     
     def move_alien(self):
-        # nombre de  tir que le joueur peut tirer entre chaque déplacement d'alien
-        self.__bullet_cooldown = 2  
-        
-        
-        for i in range(5):
+        if self.__gameover == 0:
+            # nombre de  tir que le joueur peut tirer entre chaque déplacement d'alien
+            self.__bullet_cooldown = 2  
             
-            # quand ils atteignent la limite au bord droit, ils changent de direction: 
-            if self.__alien_list[i][9].getx() > 0.95 :
-                self.__direction_alien = -1
+            
+            for i in range(5):
                 
-                for j in range(10):
-                    self.__alien_list[i][j].move_y()
-                    self.__alien_list[i][j].setx(1 - (9 - j) * 0.05)
+                # quand ils atteignent la limite au bord droit, ils changent de direction: 
+                if self.__alien_list[i][9].getx() > 0.95 :
+                    self.__direction_alien = -1
                     
-            # de même pour la limite au bord gauche:           
-            if self.__alien_list[i][0].getx() < 0.06: 
-                self.__direction_alien = 1
-                
+                    for j in range(10):
+                        self.__alien_list[i][j].move_y()
+                        self.__alien_list[i][j].setx(1 - (9 - j) * 0.05)
+                        
+                # de même pour la limite au bord gauche:           
+                if self.__alien_list[i][0].getx() < 0.06: 
+                    self.__direction_alien = 1
+                    
+                    for j in range(10):
+                        self.__alien_list[i][j].move_y()
+                        self.__alien_list[i][j].setx(j * 0.05 + 0.01)
+                        
+            # cas où les aliens sont entre l'intervalle autorisé de l'écran,
+            # ils se déplacent dans la dernière direction donnée
+            for i in range(5):
                 for j in range(10):
-                    self.__alien_list[i][j].move_y()
-                    self.__alien_list[i][j].setx(j * 0.05 + 0.01)
-                     
-        # cas où les aliens sont entre l'intervalle autorisé de l'écran,
-        # ils se déplacent dans la dernière direction donnée
-        for i in range(5):
-            for j in range(10):
-                self.__alien_list[i][j].move_x( self.__direction_alien )
-                self.__game.coords(self.__rec_alien_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
-                if self.__alien_list[i][j].getlife() == 1:
-                    lower_alien = (i,j)
-        
-        
-        # si les aliens arrivent en bas de la zone autorisée alors le joueur a perdu
-        if self.__alien_list[lower_alien[0]][lower_alien[1]].gety() > 0.95:
-            self.__gameover = 1
-            self.you_lose()
-        # autrement, on actualise le jeu
-        else:
-            self.__game.after(self.__speed, self.move_alien)
+                    self.__alien_list[i][j].move_x( self.__direction_alien )
+                    self.__game.coords(self.__rec_alien_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
+                    if self.__alien_list[i][j].getlife() == 1:
+                        lower_alien = (i,j) # indices de l'alien le plus bas
+            
+            
+            # si les aliens arrivent en bas de la zone autorisée alors le joueur a perdu
+            if self.__alien_list[lower_alien[0]][lower_alien[1]].gety() > 0.95:
+                self.__gameover = 1
+                self.you_lose()
+            # autrement, on actualise le jeu
+            else:
+                self.__game.after(self.__speed, self.move_alien)
         
     
     
@@ -302,3 +301,9 @@ class Board:
         self.__game.create_text(425, 100, text = "GAME OVER !", font  = ("Times New Roman", 15, "bold"), fill = "white")
         self.__game.create_text(425, 200, text = "Score : " + str(self.__score), font  = ("Times New Roman", 15, "bold"), fill = "white")
     
+    
+    # Méthode permettant de modifier la valeur de la variable gameover
+    # entrée : self
+    # sortie : modification de la variable gameover
+    def set_gameover(self, value):
+        self.__gameover = value
