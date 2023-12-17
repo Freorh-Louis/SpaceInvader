@@ -5,7 +5,7 @@ Hugo PRIGENT, Louis VINCENT
 Classe permettant de lancer le jeu 
 en choisissant la difficulté
 
-to do :
+to do : fini
 """
 
 import tkinter as tk
