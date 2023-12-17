@@ -10,6 +10,7 @@ Il existe 3 difficultés à notre jeu qui affectent, en fonction de leur degré,
 aliens. Chaque élimination d'un alien rapporte 20 points et le score s'affiche en haut à gauche de l'écran.
 Le joueur à 3 vies, s'il arrive au bout de celles-ci, la partie est perdue. 
 Quand les aliens sont trop proches du vaisseau, la partie est aussi perdue.
+Si tout les aliens sont tués, une nouvelle vague apparait et les aliens deviennent plus rapide.
 
 Le but du joueur est de faire le plus grand score possible.
 
