@@ -12,3 +12,5 @@ Le joueur à 3 vies, s'il arrive au bout de celles-ci, la partie est perdue.
 Quand les aliens sont trop proches du vaisseau, la partie est aussi perdue.
 
 Le but du joueur est de faire le plus grand score possible.
+
+Pour lancer le jeu, lancez le main.
