@@ -16,7 +16,7 @@ class Bullet:
     # Méthode permettant de déplacer de 1% la position selon x de bullet dans un direction donnée
     # direction = 1 : déplacement vers la droite / direction = -1 : déplacement vers la gauche
     def move_y(self, direction):
-        self.__y += direction*0.01
+        self.__y += direction * 0.01
         return self.__y
     
 

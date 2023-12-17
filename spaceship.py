@@ -29,7 +29,7 @@ class Spaceship:
     # entrée: l'objet
     # sortie: nouveau nombre de vie (entier)
     def damage(self):
-        self.__life -=1
+        self.__life -= 1
         return self.__life
     
     # Méthode permettant d'accéder au nombre de vie de l'objet
