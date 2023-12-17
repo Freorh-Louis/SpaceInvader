@@ -45,9 +45,7 @@ lives = tk.Label(window, textvariable = life, font = ("Times New Roman", 15, "bo
 
 # lancement du menu
 launcher.launch_menu()
-
 launcher.clear_window()
-
 
 
 window.mainloop()
