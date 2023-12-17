@@ -104,6 +104,9 @@ class Launch_game:
         self.__window.children[game_list[8]].grid(row = 1, column = 1, sticky= "W")
         self.__window.children[game_list[9]].grid(row = 1, column = 1, sticky = "E")
 
+        self.__score.set("Score : 0")
+        self.__life.set("Life : 3")
+
         self.__window.children[game_list[5]].delete('all')
         self.__board1 = Board(self.__window.children[game_list[5]], self.__score, self.__life, self.__difficulty)
         self.__board1.create_alien()

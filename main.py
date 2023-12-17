@@ -21,10 +21,6 @@ window.geometry("1000x700+100+0")
 score = tk.StringVar()
 life = tk.StringVar()
 
-# initialisation des valeurs de vie et du score
-score.set("Score : 0")
-life.set("Life : 3")
-
 # lancement du jeu
 launcher = Launch_game(window, score, life)
 
