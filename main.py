@@ -21,7 +21,7 @@ window.geometry("1000x700+100+0")
 score = tk.StringVar()
 life = tk.StringVar()
 
-# initialisation des valuer de vie et du score
+# initialisation des valeurs de vie et du score
 score.set("Score : 0")
 life.set("Life : 3")
 

@@ -102,7 +102,7 @@ class Board:
                 self.__alien_list[i][j].move_x( self.__direction_alien )
                 self.__game.coords(self.__rec_alien_list[i][j], self.__alien_list[i][j].getx() * 820, self.__alien_list[i][j].gety() * 620, self.__alien_list[i][j].getx() * 820 + 30, self.__alien_list[i][j].gety() * 620 + 30)
                 if self.__alien_list[i][j].getlife() == 1:
-                    lower_alien = (i,j)
+                    lower_alien = (i,j) # indices de l'alien le plus bas
         
         
         # si les aliens arrivent en bas de la zone autorisée alors le joueur a perdu
